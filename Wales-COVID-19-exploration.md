@@ -3,6 +3,11 @@ COVID-19 Data Analysis
 TW
 18 June 2020
 
+``` r
+#load packages
+library(tidyverse)
+```
+
     ## Warning: package 'tidyverse' was built under R version 3.5.3
 
     ## -- Attaching packages ------------------------------------------------------------------------------------------ tidyverse 1.3.0 --
@@ -28,7 +33,15 @@ TW
     ## x dplyr::filter() masks stats::filter()
     ## x dplyr::lag()    masks stats::lag()
 
+``` r
+library(fs)
+```
+
     ## Warning: package 'fs' was built under R version 3.5.3
+
+``` r
+library(readxl)
+```
 
     ## Warning: package 'readxl' was built under R version 3.5.3
 
