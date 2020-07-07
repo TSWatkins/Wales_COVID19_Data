@@ -71,7 +71,7 @@ ggplot(Cumualtive_Cases_Health_Board,aes(x = Specimen_date, y = Cumulative_cases
   xlab('Specimen Date') +
   ylab('Cumulative Cases') +
   theme(legend.position = 'bottom') +
-  scale_color_brewer(palette = 'Set1')
+  scale_color_brewer(palette = 'Dark2')
 ```
 
 ![](Wales-COVID-19-exploration_files/figure-markdown_github/unnamed-chunk-5-1.png) \#\#\# New cases per health board
@@ -99,7 +99,27 @@ ggplot(Plotting_Data,aes(x = Specimen_date, y = New_Case_Average)) +
   xlab('Specimen Date') +
   ylab('Number of New Cases \n(5 day rolling average) ') +
   theme(legend.position = 'bottom') +
-  scale_color_brewer(palette = 'Set1')
+  scale_color_brewer(palette = 'Dark2')
 ```
 
 ![](Wales-COVID-19-exploration_files/figure-markdown_github/unnamed-chunk-6-1.png)
+
+### Cases by age and sex
+
+``` r
+Age_Sex2=Age_Sex[!Age_Sex$Cases == 0,]
+Age_Sex2$Age_group = factor(Age_Sex2$Age_group, levels= c('<10','10-19','20-29','30-39','40-49','50-59',
+                                                          '60-69','70-79','80-89','90-99','100+','Unknown'))
+
+ggplot(Age_Sex2, aes(x=Cases,
+                    y=Age_group)) + 
+  geom_point(size=15, alpha=0.6, shape=21, color='black', aes(fill=Sex)) +
+  xlab('Cases') +
+  ylab('Age Group') +
+  scale_x_log10() +
+  theme_classic() +
+  theme(legend.position = 'bottom') +
+  scale_fill_brewer(palette = 'Dark2')
+```
+
+![](Wales-COVID-19-exploration_files/figure-markdown_github/unnamed-chunk-7-1.png)
