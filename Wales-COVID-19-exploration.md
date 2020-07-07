@@ -63,10 +63,11 @@ Cumulative_Cases$Health_Board = c(rep('Aneurin Bevan',summary(Cumulative_Cases$L
 
 ``` r
 Cumualtive_Cases_Health_Board=aggregate(Cumulative_cases ~  Health_Board + Specimen_date, data=  Cumulative_Cases, sum)
+Cumualtive_Cases_Health_Board2 = Cumualtive_Cases_Health_Board[!Cumualtive_Cases_Health_Board$Cumulative_cases == 0,]
 
-ggplot(Cumualtive_Cases_Health_Board,aes(x = Specimen_date, y = Cumulative_cases)) +  
+ggplot(Cumualtive_Cases_Health_Board2,aes(x = Specimen_date, y = Cumulative_cases)) +  
          geom_line(aes(color = Health_Board),
-                   size=1.1,alpha=0.8) +
+                   size=2,alpha=0.8) +
   theme_classic() +
   xlab('Specimen Date') +
   ylab('Cumulative Cases') +
@@ -74,7 +75,34 @@ ggplot(Cumualtive_Cases_Health_Board,aes(x = Specimen_date, y = Cumulative_cases
   scale_color_brewer(palette = 'Dark2')
 ```
 
-![](Wales-COVID-19-exploration_files/figure-markdown_github/unnamed-chunk-5-1.png) \#\#\# New cases per health board
+![](Wales-COVID-19-exploration_files/figure-markdown_github/unnamed-chunk-5-1.png) \#\#\# Cases by health board and local authority
+
+``` r
+# Treemap of cses by health board and local auth
+
+Latest_Date = Cumulative_Cases[Cumulative_Cases$Specimen_date == max(Cumulative_Cases$Specimen_date),]
+
+# treemap
+treemap::treemap(Latest_Date,
+            index=c("Health_Board","Local_Authority"),
+            vSize="Cumulative_cases",
+            type="index",
+            bg.labels=c("transparent"),
+            align.labels=list(
+              c("center", "center"), 
+              c("centre", "centre")),
+            fontsize.labels=c(12,8), 
+            border.col=c("black","black"),
+            border.lwds=c(3,0.5),
+            palette = 'Dark2',
+            overlap.labels=0.5,
+            inflate.labels=F,
+            title="Treemap of COVID-19 cases per Local Health Board") 
+```
+
+![](Wales-COVID-19-exploration_files/figure-markdown_github/unnamed-chunk-6-1.png)
+
+### New cases per health board
 
 ``` r
 New_Cases_Health_Board=aggregate(New_Cases ~  Health_Board + Specimen_date, data=  Cumulative_Cases, sum)
@@ -102,9 +130,7 @@ ggplot(Plotting_Data,aes(x = Specimen_date, y = New_Case_Average)) +
   scale_color_brewer(palette = 'Dark2')
 ```
 
-![](Wales-COVID-19-exploration_files/figure-markdown_github/unnamed-chunk-6-1.png)
-
-### Cases by age and sex
+![](Wales-COVID-19-exploration_files/figure-markdown_github/unnamed-chunk-7-1.png) \#\#\# Cases by age and sex
 
 ``` r
 Age_Sex2=Age_Sex[!Age_Sex$Cases == 0,]
@@ -122,4 +148,4 @@ ggplot(Age_Sex2, aes(x=Cases,
   scale_fill_brewer(palette = 'Dark2')
 ```
 
-![](Wales-COVID-19-exploration_files/figure-markdown_github/unnamed-chunk-7-1.png)
+![](Wales-COVID-19-exploration_files/figure-markdown_github/unnamed-chunk-8-1.png)
